@@ -155,7 +155,7 @@ Ext.onReady(function() {
 			{rdelim});
 		store['{$tableID}'].loadData(tableData['{$tableID}']);
 			
-		grid['{$tableID}'] = new Ext.ux.SlimGridPanel({ldelim}
+		grid['{$tableID}'] = new Ext.grid.GridPanel({ldelim}
 			id: '{$tableID}',
 			store: store['{$tableID}'],
 			{if !$matrix->storeTableState}
