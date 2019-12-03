@@ -2229,8 +2229,8 @@ function genIssueSummary(&$tcaseMgr,$signature,$context) {
 
   $replaceWith = array($signature->tcname,$ecx['tproject_name'],
                        $ecx['tplan_name'],$ecx['build_name'],
-                       $ecx['platform_name'],$signature->tcpathname,
-                       date('Y-m-dTH:i',time()));
+                       $ecx['platform_name'],substr($signature->tcpathname, strpos($signature->tcpathname, '/', 1) + 1),
+                       date('d-m-Y H:i',time()));
 
   $nu = array();
   $nu['tcase'] = str_replace($searchFor, $replaceWith, $text['tcase']);

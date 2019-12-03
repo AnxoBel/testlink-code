@@ -1099,7 +1099,7 @@ $tlCfg->exec_cfg->issues->tcstep_level = new stdClass();
  * /saado/TS100/SAA-4:WSTEPS  Executed ON (ISO FORMAT): 2018-02-25CET10:00
  */
 $tlCfg->exec_cfg->issues->tcase_level->subject = 
-'$$issue_subject_tcname %%TCPATHNAME%% - $$issue_subject_execon %%EXECTSISO%% ';
+'%%TCPATHNAME%% (%%EXECTSISO%%)';
 
 /*
 $tlCfg->exec_cfg->issues->tcstep_level->subject = 
