@@ -75,7 +75,7 @@ if( !defined('DB_TABLE_PREFIX') ) {
 }
 
 /** The root dir for the testlink installation with trailing slash */
-define('TL_ABS_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);
+define('TL_ABS_PATH', "/opt/bitnami/testlink" . DIRECTORY_SEPARATOR);
 
 /** Just for documentation */
 $tlCfg->testlinkdotorg = 'http://www.testlink.org';
