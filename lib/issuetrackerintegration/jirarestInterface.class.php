@@ -783,14 +783,14 @@ class jirarestInterface extends issueTrackerInterface
   function getCustomFieldsAttribute($name,$objCFSet)
   {
     $cfSet = get_object_vars($objCFSet);
-    $cfSet = $cfSet['customField'];    
+//  $cfSet = $cfSet['customField'];
 
     foreach ($cfSet as $cf)
     {
-      $cf = (array)$cf;    
+      $cf = (array)$cf;
       $cfJIRAID = $cf['customfieldId']; 
       $valueSet = (array)$cf['values'];        
-      $loop2do = count($valueSet);
+      $loop2do = count($valueSet['value']);
 
       $dummy = null;
       $cfType = strtolower((string)$cf['type']);
@@ -812,10 +812,14 @@ class jirarestInterface extends issueTrackerInterface
           $dummy = array('value' => (string)$valueSet['value']);
         break;
 
-        case 'labels':
-          for($vdx=0; $vdx <= $loop2do; $vdx++)
-          {
-            $dummy[] = (string)$valueSet['value'][$vdx];
+	case 'labels':
+          for($vdx=0; $vdx < $loop2do; $vdx++)
+	  {
+	    if ($loop2do<2) {
+	      $dummy[] = (string)$valueSet['value'];
+	    } else {
+	      $dummy[] = (string)$valueSet['value'][$vdx];
+	   }
           }
         break;
       
@@ -836,7 +840,7 @@ class jirarestInterface extends issueTrackerInterface
           }
         break;
       }      
-      $this->issueAttr[$cfJIRAID] = $dummy; 
+      $this->issueAttr[$cfJIRAID] = $dummy;
     } 
   }
 
