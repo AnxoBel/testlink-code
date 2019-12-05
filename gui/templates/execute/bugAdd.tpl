@@ -47,28 +47,35 @@ TestLink Open Source Project - http://testlink.sourceforge.net/
     {if $gui->user_action == 'create' || $gui->user_action == 'doCreate' }
       <p class="label">{$labels.bug_summary}(*)
         <input type="text" id="bug_summary" name="bug_summary" required value="{$gui->bug_summary}"
-               size="{#BUGSUMMARY_SIZE#}" maxlength="{$gui->issueTrackerCfg->bugSummaryMaxLength}" 
+               size="{#BUGSUMMARY_SIZE#}" maxlength="{$gui->issueTrackerCfg->bugSummaryMaxLength}" >
       </p>
 
      {if $gui->issueTrackerMetaData != ''}
       <p>
       {if $gui->issueTrackerMetaData.issueTypes != ''}
        <label for="issueType">{$labels.issueType}</label>
+       {*
        {html_options name="issueType" options=$gui->issueTrackerMetaData.issueTypes.items 
         selected = $gui->issueType
        }
+       *}
+       <input type="text" id="issueType" name="issueType" size=6 required value="{$gui->issueType}" disabled >
+
       {/if}
 
       {if $gui->issueTrackerMetaData.priorities != ''}
        <label for="issuePriority">{$labels.issuePriority}</label> 
+       {*
        {html_options name="issuePriority" options=$gui->issueTrackerMetaData.priorities.items
         selected = $gui->issuePriority
        }
+       *}
+       <input type="text" id="issuePriority" name="issuePriority" size=2 required value="{$gui->issuePriority}" disabled >
       {/if}
       </p>
 
       <p> 
-      {if $gui->issueTrackerMetaData.versions != ''}
+      {* {if $gui->issueTrackerMetaData.versions != ''}
         <label for="artifactVersion">{$labels.artifactVersion}</label> 
         <select class="chosen-select" data-placeholder=" " required 
                 {if $gui->issueTrackerMetaData.versions.isMultiSelect}
@@ -81,8 +88,10 @@ TestLink Open Source Project - http://testlink.sourceforge.net/
         selected = $gui->artifactVersion
         }
         </select>
-      {/if}
-      
+      {/if} *}
+      <label for="artifactVersion">{$labels.artifactVersion}</label>
+      <input type="text" name="artifactVersion[]" size=2 required value="1" disabled >
+
       {if $gui->issueTrackerMetaData.components.items != ''}
         <label for="artifactComponent">{$labels.artifactComponent}</label>         
          <select class="chosen-select" data-placeholder=" " required 
@@ -122,7 +131,7 @@ TestLink Open Source Project - http://testlink.sourceforge.net/
 
      {if $gui->user_action == 'create' || $gui->user_action == 'doCreate'}
       <input type="submit" value="{$labels.btn_save}" 
-             onclick="user_action.value='doCreate';return dialog_onSubmit(bug_dialog)" />
+             onclick="user_action.value='doCreate'; return dialog_onSubmit(bug_dialog)" />
      {/if} 
 
      {if $gui->user_action == 'add_note'}

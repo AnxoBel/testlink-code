@@ -806,9 +806,8 @@ function generateIssueText($dbHandler,$argsObj,$itsObj,$addLinkToTL=false) {
     $ret->description .= "\n" . $exec['statusVerbose'] . "\n\n" . $exec['execution_notes'];
  
   }  
-
-  $ret->timestamp = sprintf(lang_get('execution_ts_iso'),$exec['execution_ts']);
-  $ret->summary = $ret->auditSign . ' - ' . $ret->timestamp;
+  $ret->timestamp = sprintf(date('d-m-Y H:i', strtotime($exec['execution_ts'])));
+  $ret->summary = substr($ret->auditSign, strpos($ret->auditSign, '/', 1) + 1) . ' (' . $ret->timestamp . ')';
   if(property_exists($argsObj,'bug_summary') && strlen(trim($argsObj->bug_summary)) != 0 ) {
     $ret->summary = $argsObj->bug_summary;
   }

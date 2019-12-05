@@ -32,7 +32,7 @@ Testlink Open Source Project - http://testlink.sourceforge.net/
  	{foreach from=$bugs_map key=bug_id item=bug_elem}
 	<tr>
 		<td>{$bug_elem.build_name|escape}</td>
-		<td>{if $bug_elem.tcstep_id >0} {$bug_elem.step_number} {/if}
+                <td>{if $bug_elem.tcstep_id >0} {$bug_elem.step_number} {/if}</td>
 		<td>{$bug_elem.link_to_bts}</td>
 		{if $gui->tlCanAddIssueNote}
 		  <td>

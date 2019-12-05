@@ -15,14 +15,19 @@ testlinkInitPage($db,false,false,"checkRights");
 $templateCfg = templateConfiguration();
 list($args,$gui,$its,$issueT) = initEnv($db);
 
+/* FORCE ISSUE TYPE, ISSUE PRIORITY */
+$itsCfg = $its->getCfg();
+$gui->issueType = $itsCfg->issuetype;
+$gui->issuePriority = $itsCfg->issuepriority;
+
 if( ($args->user_action == 'create' || $args->user_action == 'doCreate') && 
     $gui->issueTrackerCfg->tlCanCreateIssue) {
   // get matadata
   $gui->issueTrackerMetaData = getIssueTrackerMetaData($its);
-  
+
   switch($args->user_action) {
     case 'create':
-     $dummy = generateIssueText($db,$args,$its); 
+     $dummy = generateIssueText($db,$args,$its);
      $gui->bug_summary = $dummy->summary;
     break;
 
@@ -247,7 +252,7 @@ function getIssueTracker(&$dbHandler,$argsObj,&$guiObj)
   {
   	$it_mgr = new tlIssueTracker($dbHandler);
   	$issueTrackerCfg = $it_mgr->getLinkedTo($argsObj->tproject_id);
-
+        
   	if( !is_null($issueTrackerCfg) )
   	{
   		$its = $it_mgr->getInterfaceObject($argsObj->tproject_id);
