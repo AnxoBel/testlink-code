@@ -53,24 +53,24 @@ TestLink Open Source Project - http://testlink.sourceforge.net/
      {if $gui->issueTrackerMetaData != ''}
       <p>
       {if $gui->issueTrackerMetaData.issueTypes != ''}
-       <label for="issueType">{$labels.issueType}</label>
+       <label for="issueType" hidden>{$labels.issueType}</label>
        {*
        {html_options name="issueType" options=$gui->issueTrackerMetaData.issueTypes.items 
         selected = $gui->issueType
        }
        *}
-       <input type="text" id="issueType" name="issueType" size=6 required value="{$gui->issueType}" disabled >
+       <input type="text" id="issueType" name="issueType" size=6 required value="{$gui->issueType}" disabled hidden>
 
       {/if}
 
       {if $gui->issueTrackerMetaData.priorities != ''}
-       <label for="issuePriority">{$labels.issuePriority}</label> 
+       <label for="issuePriority" hidden>{$labels.issuePriority}</label>
        {*
        {html_options name="issuePriority" options=$gui->issueTrackerMetaData.priorities.items
         selected = $gui->issuePriority
        }
        *}
-       <input type="text" id="issuePriority" name="issuePriority" size=2 required value="{$gui->issuePriority}" disabled >
+       <input type="text" id="issuePriority" name="issuePriority" size=2 required value="{$gui->issuePriority}" disabled hidden>
       {/if}
       </p>
 
@@ -89,8 +89,8 @@ TestLink Open Source Project - http://testlink.sourceforge.net/
         }
         </select>
       {/if} *}
-      <label for="artifactVersion">{$labels.artifactVersion}</label>
-      <input type="text" name="artifactVersion[]" size=2 required value="1" disabled >
+      <label for="artifactVersion" hidden>{$labels.artifactVersion}</label>
+      <input type="text" name="artifactVersion[]" size=2 required value="1" disabled hidden>
 
       {if $gui->issueTrackerMetaData.components.items != ''}
         <label for="artifactComponent">{$labels.artifactComponent}</label>         

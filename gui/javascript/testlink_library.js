@@ -617,18 +617,24 @@ function open_bug_add_window(tproject_id,tplan_id,tcversion_id,exec_id,tcstep_id
         "&tcversion_id="+tcversion_id +"&tproject_id=" + tproject_id + 
         "&tplan_id=" + tplan_id + "&exec_id="+exec_id + "&tcstep_id="+tcstep_id;
 
-  switch(user_action)  
-  {
-    case 'create':
-      wh = "width=700,height=400";
-    break;
+  //Open new window centered via https://stackoverflow.com/a/16861050
+  w=650;
+  h=280;
 
-    default:
-      wh = "width=510,height=400";
-    break;
-  }            
-  
-  window.open(fRoot+l2l,"bug_add",wh+",resizable=yes,dependent=yes");
+  // Fixes dual-screen position                         Most browsers      Firefox
+  var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : window.screenX;
+  var dualScreenTop = window.screenTop != undefined ? window.screenTop : window.screenY;
+
+  var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+  var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+  var systemZoom = width / window.screen.availWidth;
+  var left = (width - w) / 2 / systemZoom + dualScreenLeft
+  var top = (height - h) / 2 / systemZoom + dualScreenTop
+  var newWindow = window.open(fRoot+l2l, "bug_add", 'scrollbars=yes, resizable=yes, dependent=yes, width=' + w / systemZoom + ', height=' + h / systemZoom + ', top=' + top + ', left=' + left);
+
+  // Puts focus on the newWindow
+  if (window.focus) newWindow.focus();
 }
 
 /**
