@@ -17,6 +17,11 @@ class ComposerStaticInit056ad17c9fe5d65b7d3c5047fc89f77e
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
         ),
+        'R' => 
+        array (
+            'Ripoo\\' => 6,
+            'Ripcord\\' => 8,
+        ),
         'P' => 
         array (
             'Psr\\Log\\' => 8,
@@ -28,6 +33,14 @@ class ComposerStaticInit056ad17c9fe5d65b7d3c5047fc89f77e
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Ripoo\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/tbondois/odoo-ripcord/src',
+        ),
+        'Ripcord\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/darkaonline/ripcord/src/Ripcord',
         ),
         'Psr\\Log\\' => 
         array (

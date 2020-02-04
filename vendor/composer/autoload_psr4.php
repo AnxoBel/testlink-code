@@ -7,6 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
+    'Ripoo\\' => array($vendorDir . '/tbondois/odoo-ripcord/src'),
+    'Ripcord\\' => array($vendorDir . '/darkaonline/ripcord/src/Ripcord'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
 );

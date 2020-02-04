@@ -56,6 +56,52 @@
         ]
     },
     {
+        "name": "darkaonline/ripcord",
+        "version": "v0.1.7",
+        "version_normalized": "0.1.7.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/DarkaOnLine/Ripcord.git",
+            "reference": "e37abe596f505236c489b3f8a8e6eaa2ad7d91f7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/DarkaOnLine/Ripcord/zipball/e37abe596f505236c489b3f8a8e6eaa2ad7d91f7",
+            "reference": "e37abe596f505236c489b3f8a8e6eaa2ad7d91f7",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4"
+        },
+        "require-dev": {
+            "friendsofphp/php-cs-fixer": "^2.14@dev"
+        },
+        "time": "2019-01-02T06:13:30+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Ripcord\\": "src/Ripcord"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Darius Matulionis",
+                "email": "darius@matulionis.lt"
+            }
+        ],
+        "description": "RPC client and server around PHP's xmlrpc library",
+        "keywords": [
+            "rpc",
+            "xml",
+            "xmlrpc"
+        ]
+    },
+    {
         "name": "phpmailer/phpmailer",
         "version": "v6.0.5",
         "version_normalized": "6.0.5.0",
@@ -286,6 +332,59 @@
             "polyfill",
             "portable",
             "shim"
+        ]
+    },
+    {
+        "name": "tbondois/odoo-ripcord",
+        "version": "1.6.3",
+        "version_normalized": "1.6.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/tbondois/odoo-ripcord.git",
+            "reference": "28d4bcc457c3c8309856e0dcbd42cbce7bed0ead"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/tbondois/odoo-ripcord/zipball/28d4bcc457c3c8309856e0dcbd42cbce7bed0ead",
+            "reference": "28d4bcc457c3c8309856e0dcbd42cbce7bed0ead",
+            "shasum": ""
+        },
+        "require": {
+            "darkaonline/ripcord": "^0.1.6",
+            "ext-xmlrpc": "*",
+            "php": ">=7.0"
+        },
+        "require-dev": {
+            "kint-php/kint": "*"
+        },
+        "time": "2019-05-02T12:19:20+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Ripoo\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Thomas Bondois"
+            }
+        ],
+        "description": "Ripoo : a PHP7 XML-RPC client handler for Odoo External API",
+        "homepage": "https://packagist.org/packages/tbondois/odoo-ripcord",
+        "keywords": [
+            "api",
+            "magento2",
+            "odoo",
+            "ripcord",
+            "rpc",
+            "xml",
+            "xml-rpc",
+            "xmlrpc"
         ]
     }
 ]
