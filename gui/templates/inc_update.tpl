@@ -30,7 +30,7 @@ show message after an SQL operation
      <div class="user_feedback">
   	 {/if}
 		{foreach from=$user_feedback item=msg}
-			<p>{$msg|escape}</p>
+			<p>{$msg|escape|unescape:"html"}</p>
 		{/foreach}
      </div>
 

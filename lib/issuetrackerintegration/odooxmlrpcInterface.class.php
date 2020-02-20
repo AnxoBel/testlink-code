@@ -113,11 +113,15 @@ class odooxmlrpcInterface extends issueTrackerInterface {
 
             $this->APIClient->model_execute_kw('project.task', 'message_subscribe', $followers_args, $followers_kwargs);
 
-            $this->sendEmail($this->cfg->username, $this->cfg->followers, 'New Testlink bug created: ' . $summary, $this->cfg->uriview . $id);
+            $this->sendEmail($this->cfg->username,
+                    $this->cfg->followers,
+                    'New Testlink bug created: ' . $summary,
+                    '<a href=\'' . $this->cfg->uriview . $id . '\'>' . $this->cfg->uriview . $id . '</a>'
+            );
 
             $ret = ['status_ok' => true,
                 'id' => $id,
-                'msg' => sprintf(lang_get('odoo_bug_created'), $summary, $this->cfg->project_id)
+                'msg' => sprintf(lang_get('odoo_bug_created'), $this->cfg->uriview . $id, $summary)
             ];
         } catch (Exception $e) {
             $msg = "Create Odoo task FAILURE => " . $e->getMessage();
@@ -140,7 +144,8 @@ class odooxmlrpcInterface extends issueTrackerInterface {
             'subject' => $subject,
             'body_html' => $body,
             'email_from' => $from,
-            'email_to' => $to
+            'email_to' => $to,
+            'reply_to' => $from
         ];
 
         $mail_id = $this->APIClient->create('mail.mail', $invitation_mail);
@@ -181,18 +186,44 @@ class odooxmlrpcInterface extends issueTrackerInterface {
     }
 
     public function getIssue($issueID) {
+
+        if (!$this->isConnected()) {
+            tLog(__METHOD__ . '/Not Connected ', 'ERROR');
+            return false;
+        }
+
+        $issue = null;
+
         $criteria = [
-            ['id', '=', $issueID],
+            ['id', '=', (int) $issueID],
         ];
         $limit = 1;
 
-        $issueArray = $this->APIClient->search_read('project.task', $criteria, getOdooProjectTaskFields(), $limit);
-
+        $issueArray = $this->APIClient->search_read('project.task', $criteria, $this->getOdooProjectTaskFields(), $limit);
         if (!empty($issueArray)) {
-            return $issueArray[0];
-        } else {
-            return null;
+            $issue = (object) $issueArray[0];
         }
+
+        if (!is_null($issue) && is_object($issue) && !property_exists($issue, 'errorMessages')) {
+            $issue->summary = $issue->name;
+            $issue->statusCode = $issue->stage_id[0];
+            $issue->statusVerbose = $issue->stage_id[1];
+
+            $issue->IDHTMLString = "<b>{$issueID} : </b>";
+            $issue->statusHTMLString = $this->buildStatusHTMLString($issue->statusVerbose);
+            $issue->summaryHTMLString = $issue->summary;
+            $issue->isResolved = $issue->statusVerbose == 'Closed'; //Hardcoded, maybe better to be provided via config
+        }
+        
+        return $issue;
+    }
+
+    function buildStatusHTMLString($statusVerbose) {
+        $str = $statusVerbose;
+        if ($this->guiCfg['use_decoration']) {
+            $str = "[" . $str . "] ";
+        }
+        return $str;
     }
 
     public static function getCfgTemplate() {
