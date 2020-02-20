@@ -52,7 +52,7 @@ class odooxmlrpcInterface extends issueTrackerInterface {
         $base = trim($this->cfg->uribase, "/") . '/';
 
         if (!property_exists($this->cfg, 'uriview')) {
-            $this->cfg->uriview = $base . '/web#action=176&model=project.task&view_type=form&menu_id=132&active_id=' . $this->cfg->project_id . '&id=';
+            $this->cfg->uriview = $base . 'web#action=176&model=project.task&view_type=form&menu_id=132&active_id=' . $this->cfg->project_id . '&id=';
         }
 
         if (!property_exists($this->cfg, 'uricreate')) {
@@ -97,7 +97,9 @@ class odooxmlrpcInterface extends issueTrackerInterface {
 
         try {
             $id = $this->APIClient->create('project.task', $data);
-            $this->APIClient->write('project.task', [$id], ['x_studio_reporter' => (int) $this->getUserInfobyEmail($this->cfg->reporter)['userId']]);
+
+            $reporter = (int) $this->getUserInfobyEmail($this->cfg->reporter)['userId'];
+            $this->APIClient->write('project.task', [$id], ['x_studio_reporter' => $reporter]);
 
             $tag_ids_array = array_map('intval', explode(",", $this->cfg->tag_ids));
             $this->APIClient->write('project.task', [$id], ['tag_ids' => [[(int) $this->cfg->task_type, false, $tag_ids_array]]]); //Not sure if the first value is x_studio_tasktype
@@ -112,11 +114,24 @@ class odooxmlrpcInterface extends issueTrackerInterface {
             $this->APIClient->model_execute_kw('project.task', 'message_subscribe', $followers_args, $followers_kwargs);
 
             $this->sendEmail($this->cfg->username, $this->cfg->followers, 'New Testlink bug created: ' . $summary, $this->cfg->uriview . $id);
+
+            $ret = ['status_ok' => true,
+                'id' => $id,
+                'msg' => sprintf(lang_get('odoo_bug_created'), $summary, $this->cfg->project_id)
+            ];
         } catch (Exception $e) {
-            tLog($e->getMessage(), 'ERROR');
+            $msg = "Create Odoo task FAILURE => " . $e->getMessage();
+            tLog($msg, 'ERROR');
+            $ret = ['status_ok' => false,
+                'id' => -1,
+                'msg' => $msg . '\n Variable dumps:\ndata: ' . var_export($data, true) .
+                '\nreporter: ' . var_export($reporter, true) .
+                '\npartners: ' . var_export($partner_ids_array, true) .
+                '\ntags: ' . var_export($tag_ids_array, true)
+            ];
         }
 
-        return $id;
+        return $ret;
     }
 
     private function sendEmail($from, $to, $subject, $body) {
@@ -140,7 +155,7 @@ class odooxmlrpcInterface extends issueTrackerInterface {
         try {
             $this->APIClient->model_execute_kw('mail.mail', 'send', [[$mail_id]], ["auto_commit" => false]);
         } catch (Ripoo\Exception\ResponseFaultException $e) {
-            /* We ignore it*/
+            /* We ignore it */
         }
     }
 
