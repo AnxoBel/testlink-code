@@ -98,7 +98,7 @@ class odooxmlrpcInterface extends issueTrackerInterface {
         try {
             $id = $this->APIClient->create('project.task', $data);
 
-            $reporter = (int) $this->getUserInfobyEmail($this->cfg->reporter)['userId'];
+            $reporter = (int) $this->getUserInfobyEmail($_SESSION['currentUser']->emailAddress)['userId'];
             $this->APIClient->write('project.task', [$id], ['x_studio_reporter' => $reporter]);
 
             $tag_ids_array = array_map('intval', explode(",", $this->cfg->tag_ids));
@@ -115,7 +115,7 @@ class odooxmlrpcInterface extends issueTrackerInterface {
 
             $this->sendEmail($this->cfg->username,
                     $this->cfg->followers,
-                    'New Testlink bug created: ' . $summary,
+                    '[Testlink bug][' . $_SESSION['currentUser']->firstName . '] ' . $summary,
                     '<a href=\'' . $this->cfg->uriview . $id . '\'>' . $this->cfg->uriview . $id . '</a>'
             );
 
